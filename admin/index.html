@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPO ERP - Admin Portal</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <!-- FontAwesome for standardizing icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <header class="top-nav">
+        <div class="logo-area">
+            <button id="sidebarToggle" class="icon-btn" title="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <span class="logo-text"><i class="fas fa-graduation-cap"></i> TPO ERP</span>
+        </div>
+        
+        <!-- Horizontal Main Modules -->
+        <nav class="main-modules">
+            <button class="module-btn active" data-module="student">Student</button>
+            <button class="module-btn" data-module="employer">Employer</button>
+            <button class="module-btn" data-module="training">Training</button>
+            <button class="module-btn" data-module="admin">Admin</button>
+            <button class="module-btn" data-module="reports">Reports</button>
+        </nav>
+
+        <!-- Global Settings & Profile -->
+        <div class="user-area">
+            <select id="academicYear" class="year-select">
+                <option value="2026-2027" selected>AY 2026-27</option>
+                <option value="2025-2026">AY 2025-26</option>
+            </select>
+            <span class="user-info">Hello, Admin User</span>
+            <button class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Vertical Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <ul class="sidebar-menu" id="sidebarMenu">
+                <!-- Sub-pages inject here dynamically -->
+            </ul>
+        </aside>
+
+        <!-- Main Content Workspace -->
+        <main class="main-content">
+            <div id="contentArea">
+                <h2>Welcome to TPO Operations</h2>
+                <p>Please select a module from the menu to manage data.</p>
+                <!-- Tables and Modals will be rendered inside this div -->
+            </div>
+        </main>
+    </div>
+
+    <script src="js/core/ui.js"></script>
+</body>
+</html>
