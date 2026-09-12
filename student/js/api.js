@@ -1,4 +1,4 @@
-const API_URL = "YOUR_DEPLOYED_APPS_SCRIPT_WEB_APP_URL";
+const API_URL = "https://script.google.com/macros/s/AKfycby3Q6XAoyPI0H0XVNDsimbwAxw_cSVTblR2TyTmyspk6P7cTFesfrnoEXJy8B4ZdKAt/exec";
 
 async function fetchFromAPI(action, payload = {}) {
     try {
