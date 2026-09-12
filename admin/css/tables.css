@@ -1,0 +1,14 @@
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.tpo-table {
+    width: 100%;
+    min-width: 800px; /* Forces scroll on small screens */
+    white-space: nowrap; /* Prevents text from stacking awkwardly */
+    border-collapse: collapse;
+}
