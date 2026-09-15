@@ -1,17 +1,16 @@
-// Load this when "Placement Drives" is clicked in the sidebar
+// admin/js/modules/drives.js
 
 function renderDriveBuilder() {
     const contentArea = document.getElementById('contentArea');
     
     contentArea.innerHTML = `
-        <div class="module-header">
+        <div class="module-header mb-4">
             <h2>Create New Placement Drive</h2>
         </div>
         
-        <div class="form-card">
+        <div class="form-card" style="max-width: 800px;">
             <form id="driveBuilderForm">
-                <!-- Standard Drive Details -->
-                <div class="form-row">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                     <div class="form-group">
                         <label>Company Name</label>
                         <input type="text" id="compName" required class="form-control">
@@ -24,31 +23,24 @@ function renderDriveBuilder() {
                         <label>Package (LPA)</label>
                         <input type="text" id="package" required class="form-control">
                     </div>
-                </div>
-
-                <hr>
-                
-                <!-- The Dynamic Schema Builder -->
-                <h3>Application Requirements (Schema Builder)</h3>
-                <p class="text-muted">Select what the student must provide to apply.</p>
-                
-                <div class="schema-section">
-                    <h4>Standard Fields (Auto-pulled from profile)</h4>
-                    <label><input type="checkbox" class="std-field" value="Resume" checked> Resume</label>
-                    <label><input type="checkbox" class="std-field" value="CGPA" checked> CGPA</label>
-                    <label><input type="checkbox" class="std-field" value="Photo"> Passport Photo</label>
-                    <label><input type="checkbox" class="std-field" value="10th_12th"> 10th & 12th Marks</label>
-                </div>
-
-                <div class="schema-section mt-3">
-                    <h4>Custom Fields (Student must fill these manually)</h4>
-                    <div id="customFieldsContainer">
-                        <!-- Custom fields added here -->
+                    <div class="form-group">
+                        <label>Drive Date</label>
+                        <input type="date" id="driveDate" required class="form-control">
                     </div>
-                    <button type="button" class="btn btn-outline" onclick="addCustomField()">+ Add Custom Question</button>
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-4">Publish Drive</button>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid #e5e7eb;">
+                
+                <h3 style="margin-bottom: 15px; font-size: 1.1rem;">Application Schema Builder</h3>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <h4 style="font-size: 0.9rem; color: #64748b; margin-bottom: 10px;">Custom Fields (Student must fill these manually)</h4>
+                    <div id="customFieldsContainer" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+                        <!-- Custom fields added here dynamically -->
+                    </div>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="addCustomField()">+ Add Custom Question</button>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-4" style="margin-top: 20px;">Publish Drive</button>
             </form>
         </div>
     `;
@@ -60,35 +52,29 @@ function addCustomField() {
     const container = document.getElementById('customFieldsContainer');
     const input = document.createElement('input');
     input.type = 'text';
-    input.className = 'form-control custom-field-input mt-2';
-    input.placeholder = 'e.g., "Current Backlog Count" or "Portfolio Link"';
+    input.className = 'form-control custom-field-input';
+    input.placeholder = 'e.g., "GitHub Link" or "Current Backlog Count"';
     container.appendChild(input);
 }
 
 async function handleDriveSubmit(e) {
     e.preventDefault();
     
-    // Gather standard fields
-    const stdFields = Array.from(document.querySelectorAll('.std-field:checked')).map(cb => cb.value);
-    
-    // Gather custom fields
     const customFields = Array.from(document.querySelectorAll('.custom-field-input'))
                               .map(input => input.value)
-                              .filter(val => val.trim() !== ""); // Remove empty inputs
+                              .filter(val => val.trim() !== "");
 
     const payload = {
         company_name: document.getElementById('compName').value,
         designation: document.getElementById('designation').value,
         package: document.getElementById('package').value,
-        // ... gather other standard inputs like branch, date ...
-        standard_fields: stdFields,
+        drive_date: document.getElementById('driveDate').value,
         custom_fields: customFields
     };
 
     const response = await fetchFromAPI('createDrive', payload);
-    
     if(response && response.success) {
-        alert("Drive Published! Drive ID: " + response.drive_id);
-        // Refresh view
+        alert("Drive Published Successfully!");
+        renderDriveBuilder(); // Reset form
     }
 }
