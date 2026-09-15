@@ -42,9 +42,20 @@
         </main>
     </div>
 
-    <!-- Note the ../shared/ path -->
+   <!-- 1. Shared API -->
     <script src="../shared/js/api.js"></script>
+    <!-- 2. Admin UI Controller -->
     <script src="js/core/ui.js"></script>
-    <!-- Include module scripts as needed (students.js, drives.js, etc.) -->
+    
+    <!-- 3. ALL MODULE SCRIPTS MUST BE INCLUDED HERE -->
+    <script src="js/modules/students.js"></script>
+    <script src="js/modules/drives.js"></script>
+    <script src="js/modules/applications.js"></script>
+    <script src="js/modules/training.js"></script>
+    <script src="js/modules/reports.js"></script>
+    <script src="js/modules/settings.js"></script>
+    
+    <!-- Chart.js for Reports -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
