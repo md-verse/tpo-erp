@@ -1,94 +1,67 @@
-// Load this when "Placement Analytics" is clicked in the sidebar
+// admin/js/modules/reports.js
 
 async function renderAnalyticsDashboard() {
     const contentArea = document.getElementById('contentArea');
     
     contentArea.innerHTML = `
-        <div class="module-header">
-            <h2>Executive KPI Dashboard</h2>
-            <button class="btn btn-outline" onclick="exportNAACReport()">
-                <i class="fas fa-file-excel"></i> Export NAAC Report
-            </button>
+        <div class="module-header mb-4" style="display: flex; justify-content: space-between;">
+            <h2>KPI Dashboard</h2>
+            <button class="btn btn-primary"><i class="fas fa-file-excel"></i> Export NAAC Data</button>
         </div>
         
-        <!-- KPI Metrics Cards -->
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <h4>Placement Rate</h4>
-                <h2 id="kpiRate" class="text-primary">--%</h2>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px;">
+            <div class="form-card text-center">
+                <h4 style="color: #64748b; font-size: 0.9rem;">Placement Rate</h4>
+                <h2 style="color: #4f46e5; margin-top: 10px; font-size: 2rem;">78%</h2>
             </div>
-            <div class="kpi-card">
-                <h4>Highest Package</h4>
-                <h2 id="kpiHighest" class="text-success">-- LPA</h2>
+            <div class="form-card text-center">
+                <h4 style="color: #64748b; font-size: 0.9rem;">Highest Package</h4>
+                <h2 style="color: #10b981; margin-top: 10px; font-size: 2rem;">18 LPA</h2>
             </div>
-            <div class="kpi-card">
-                <h4>Total Offers</h4>
-                <h2 id="kpiOffers" class="text-info">--</h2>
+            <div class="form-card text-center">
+                <h4 style="color: #64748b; font-size: 0.9rem;">Total Offers</h4>
+                <h2 style="color: #f59e0b; margin-top: 10px; font-size: 2rem;">342</h2>
             </div>
-            <div class="kpi-card">
-                <h4>Recruiters</h4>
-                <h2 id="kpiRecruiters" class="text-warning">--</h2>
+            <div class="form-card text-center">
+                <h4 style="color: #64748b; font-size: 0.9rem;">Recruiters</h4>
+                <h2 style="color: #3b82f6; margin-top: 10px; font-size: 2rem;">87</h2>
             </div>
         </div>
-
-        <!-- Charts Container -->
-        <div class="charts-grid mt-4">
-            <div class="chart-card">
-                <h3>Branch Placement Ratio</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-card">
+                <h3 style="margin-bottom: 20px; text-align: center;">Branch Placement Ratio</h3>
                 <canvas id="branchChart"></canvas>
             </div>
-            <div class="chart-card">
-                <h3>Package Distribution</h3>
+            <div class="form-card">
+                <h3 style="margin-bottom: 20px; text-align: center;">Package Distribution</h3>
                 <canvas id="packageChart"></canvas>
             </div>
         </div>
     `;
 
-    loadChartData();
-}
-
-async function loadChartData() {
-    const response = await fetchFromAPI('getKPIDashboard', { 
-        academic_year: window.globalAcademicYear 
-    });
-
-    if (response && response.success) {
-        // 1. Populate KPI Cards
-        document.getElementById('kpiRate').innerText = response.metrics.placementRate;
-        document.getElementById('kpiHighest').innerText = response.metrics.highestPackage;
-        document.getElementById('kpiOffers').innerText = response.metrics.totalOffers;
-        document.getElementById('kpiRecruiters').innerText = response.metrics.activeRecruiters;
-
-        // 2. Render Branch Doughnut Chart[cite: 1]
-        const branchCtx = document.getElementById('branchChart').getContext('2d');
-        new Chart(branchCtx, {
-            type: 'doughnut',
-            data: {
-                labels: Object.keys(response.charts.branchRatio),
-                datasets: [{
-                    data: Object.values(response.charts.branchRatio),
-                    backgroundColor: ['#0d6efd', '#20c997', '#ffc107', '#6f42c1']
-                }]
-            }
-        });
-
-        // 3. Render Package Bar Chart[cite: 1]
-        const pkgCtx = document.getElementById('packageChart').getContext('2d');
-        new Chart(pkgCtx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(response.charts.packageDist),
-                datasets: [{
-                    label: 'Students Placed',
-                    data: Object.values(response.charts.packageDist),
-                    backgroundColor: '#6f42c1'
-                }]
-            }
-        });
+    // Ensure Chart.js is loaded in admin/index.html before running this
+    if (typeof Chart !== 'undefined') {
+        renderCharts();
+    } else {
+        alert("Please include Chart.js library in your index.html");
     }
 }
 
-function exportNAACReport() {
-    alert("Triggering backend to generate and download NAAC compliant Excel sheet...");
-    // Future API call to 'exportNAACData'
+function renderCharts() {
+    new Chart(document.getElementById('branchChart').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['COMP', 'IT', 'AIML', 'DS'],
+            datasets: [{ data: [120, 85, 45, 30], backgroundColor: ['#4f46e5', '#10b981', '#f59e0b', '#ec4899'] }]
+        }
+    });
+
+    new Chart(document.getElementById('packageChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['3L', '5L', '8L', '12L+'],
+            datasets: [{ label: 'Students Placed', data: [40, 150, 75, 15], backgroundColor: '#4f46e5' }]
+        }
+    });
 }
