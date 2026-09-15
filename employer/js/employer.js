@@ -1,26 +1,47 @@
-async function employerLogin() {
-    const driveId = document.getElementById('driveId').value;
-    const secret = document.getElementById('companySecret').value;
+// employer/js/employer.js
 
-    const response = await fetchFromAPI('employerLogin', { drive_id: driveId, secret: secret });
+async function initEmployerDashboard() {
+    const driveId = localStorage.getItem('activeDriveId');
+    if (!driveId) return;
 
-    if (response && response.success) {
-        document.getElementById('employerLogin').style.display = 'none';
-        document.getElementById('employerDashboard').style.display = 'block';
+    const tbody = document.getElementById('applicantTableBody');
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center">Loading applicants...</td></tr>';
+
+    // Fetch applicants specifically for this drive
+    const response = await fetchFromAPI('getEmployerDriveData', { drive_id: driveId });
+
+    if (response && response.applicants && response.applicants.length > 0) {
+        tbody.innerHTML = '';
         
-        const tbody = document.getElementById('applicantTableBody');
         response.applicants.forEach(app => {
+            // Apply status badge styling
+            let statusClass = 'badge-applied';
+            if (app.status === 'Shortlisted') statusClass = 'badge-shortlisted';
+            if (app.status === 'Selected') statusClass = 'badge-selected';
+
             tbody.innerHTML += `
                 <tr>
-                    <td>${app.name}</td>
+                    <td><strong>${app.name}</strong></td>
                     <td>${app.branch}</td>
                     <td>${app.cgpa}</td>
-                    <td><span class="badge">${app.status}</span></td>
-                    <td><button class="btn btn-outline btn-sm">View CV</button></td>
+                    <td><span class="badge ${statusClass}">${app.status}</span></td>
+                    <td>
+                        <button class="btn btn-outline btn-sm" onclick="viewCV('${app.cvUrl}')">
+                            <i class="fas fa-file-pdf"></i> View CV
+                        </button>
+                    </td>
                 </tr>
             `;
         });
     } else {
-        alert("Invalid Drive ID or Secret");
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No applicants found for this drive yet.</td></tr>';
     }
+}
+
+function viewCV(url) {
+    if (!url || url === 'undefined' || url.trim() === '') {
+        alert("Applicant has not uploaded a valid CV.");
+        return;
+    }
+    window.open(url, '_blank');
 }
