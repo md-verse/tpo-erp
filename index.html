@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TPO ERP - Secure Login</title>
-    <!-- Link to the shared global CSS -->
     <link rel="stylesheet" href="shared/css/components.css">
     <link rel="stylesheet" href="shared/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="login-bg">
-
     <div class="login-wrapper">
         <div class="login-brand">
             <i class="fas fa-graduation-cap"></i>
@@ -19,7 +17,6 @@
         </div>
 
         <div class="login-card">
-            <!-- Universal Tab Selector -->
             <div class="login-tabs">
                 <button class="tab-btn active" data-target="studentForm">Student</button>
                 <button class="tab-btn" data-target="employerForm">Employer</button>
@@ -27,7 +24,7 @@
             </div>
 
             <div class="form-container">
-                <!-- 1. Student Form -->
+                <!-- Student Form -->
                 <form id="studentForm" class="auth-form active">
                     <h3>Student Portal</h3>
                     <div class="form-group mb-3">
@@ -47,7 +44,7 @@
                     <button type="submit" class="btn btn-primary w-100">Access Dashboard</button>
                 </form>
 
-                <!-- 2. Employer Form (Hidden initially) -->
+                <!-- Employer Form -->
                 <form id="employerForm" class="auth-form">
                     <h3>Applicant Tracking System</h3>
                     <div class="form-group mb-3">
@@ -67,7 +64,7 @@
                     <button type="submit" class="btn btn-primary w-100">Access ATS</button>
                 </form>
 
-                <!-- 3. Admin Form (Hidden initially) -->
+                <!-- Admin Form -->
                 <form id="adminForm" class="auth-form">
                     <h3>TPO Staff Portal</h3>
                     <div class="form-group mb-3">
@@ -89,8 +86,7 @@
             </div>
         </div>
     </div>
-
-    <!-- Unified Shared Scripts -->
+    
     <script src="shared/js/api.js"></script>
     <script src="shared/js/auth.js"></script>
 </body>
