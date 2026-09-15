@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TPO Student Portal</title>
+    <link rel="stylesheet" href="../shared/css/layout.css">
+    <link rel="stylesheet" href="../shared/css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="logo-area"><span class="logo-text">TPO Student</span></div>
+        <div class="user-area">
+            <span id="studentNameDisplay" style="font-weight: 600;"></span>
+            <button class="btn btn-outline" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <main class="main-content" style="width: 100%;"> <!-- Full width, no sidebar -->
+            <div class="kpi-grid mb-4">
+                <div class="form-card">
+                    <h3>Profile Completion</h3>
+                    <h2 id="completionScore" class="text-primary">--%</h2>
+                    <button class="btn btn-outline mt-3" onclick="loadProfileEditor()">Edit Profile</button>
+                </div>
+            </div>
+            <h2>Eligible Drives</h2>
+            <div id="drivesContainer" class="drives-grid"></div>
+        </main>
+    </div>
+
+    <script src="../shared/js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/modules/profile.js"></script>
+    <script src="js/modules/drives.js"></script>
+    <script>
+        // Redirect to login if token is missing
+        if(!localStorage.getItem('activeStudentGR')) window.location.href = '../index.html';
+        else initDashboard();
+    </script>
+</body>
+</html>
