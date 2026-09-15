@@ -1,0 +1,17 @@
+.form-card, .kpi-card, .chart-card { background: var(--surface-white); padding: 1.5rem; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+.btn { padding: 0.5rem 1rem; border-radius: 6px; font-weight: 500; font-size: 0.875rem; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+.btn-primary { background: var(--primary-blue); color: white; }
+.btn-outline { background: transparent; border: 1px solid #d1d5db; color: var(--text-main); }
+.form-control { width: 100%; padding: 0.6rem 1rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem; background: #f9fafb; }
+.table-responsive { width: 100%; overflow-x: auto; background: #fff; border-radius: 8px; }
+.tpo-table { width: 100%; border-collapse: collapse; min-width: 800px; }
+.tpo-table th { background-color: #f8fafc; color: #475569; padding: 1rem; text-align: left; border-bottom: 2px solid #e2e8f0; }
+.tpo-table td { padding: 1rem; border-bottom: 1px solid #f1f5f9; }
+.badge { padding: 4px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
+.badge-placed { background: #d1fae5; color: #065f46; }
+.badge-eligible { background: #dbeafe; color: #1e40af; }
+.text-center { text-align: center; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-4 { margin-top: 1.5rem; }
